@@ -38,9 +38,14 @@ st.title("Real-time Database Update")
 # Placeholder for dynamic update
 data_placeholder = st.empty()
 
-# Auto-refresh every 5 seconds (change as needed)
-while True:
-    # Fetch the data
+# If session state hasn't been initialized, set up the state for the first run
+if 'last_update' not in st.session_state:
+    st.session_state.last_update = None
+
+# Fetch the data once if necessary
+if st.session_state.last_update is None or (time.time() - st.session_state.last_update > 5):
+    # Update session state
+    st.session_state.last_update = time.time()
     data = get_data()
 
     # Update the placeholder with the latest data
@@ -49,6 +54,7 @@ while True:
     else:
         data_placeholder.warning("No data found or an error occurred.")
 
-    # Wait before refreshing the data
-    time.sleep(2)  # Updates every 5 seconds
-    st.experimental_rerun()  # Forces the page to re-render
+# Loop to simulate real-time update, fetching every 5 seconds
+while True:
+    time.sleep(5)  # Updates every 5 seconds
+    st.experimental_rerun()  # Refreshes the app to reflect updates
