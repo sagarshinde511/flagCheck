@@ -1,6 +1,7 @@
 import streamlit as st
 import mysql.connector
 from mysql.connector import Error
+import time
 
 # Database connection details
 HOST = "82.180.143.66"
@@ -32,12 +33,22 @@ def get_data():
             connection.close()
 
 # Streamlit app
-st.title("Database Reader")
+st.title("Real-time Database Update")
 
-st.subheader("Fetching data from the database...")
-data = get_data()
+# Placeholder for dynamic update
+data_placeholder = st.empty()
 
-if data is not None:
-    st.success(f"Value of F1: {data}")
-else:
-    st.warning("No data found or an error occurred.")
+# Auto-refresh every 5 seconds (change as needed)
+while True:
+    # Fetch the data
+    data = get_data()
+
+    # Update the placeholder with the latest data
+    if data is not None:
+        data_placeholder.success(f"Value of F1: {data}")
+    else:
+        data_placeholder.warning("No data found or an error occurred.")
+
+    # Wait before refreshing the data
+    time.sleep(2)  # Updates every 5 seconds
+    st.experimental_rerun()  # Forces the page to re-render
