@@ -2,7 +2,7 @@ import streamlit as st
 
 # Set default login credentials
 DEFAULT_USERNAME = "admin"
-DEFAULT_PASSWORD = "password123"
+DEFAULT_PASSWORD = "admin"
 
 # Page configuration
 st.set_page_config(page_title="Login Page", page_icon="🔒", layout="centered")
