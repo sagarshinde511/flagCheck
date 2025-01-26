@@ -35,7 +35,7 @@ def dashboard():
     st.write("Welcome to your dashboard!")
     if st.button("Logout"):
         st.session_state.authenticated = False
-        st.experimental_rerun()  # Immediately refresh the app to return to the login page
+        #st.experimental_rerun()  # Immediately refresh the app to return to the login page
 
 # Main application flow
 if st.session_state.authenticated:
