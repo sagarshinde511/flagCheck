@@ -2,7 +2,7 @@ import streamlit as st
 
 # Set default login credentials
 DEFAULT_USERNAME = "admin"
-DEFAULT_PASSWORD = "admin"
+DEFAULT_PASSWORD = "password123"
 
 # Page configuration
 st.set_page_config(page_title="Login Page", page_icon="🔒", layout="centered")
@@ -25,7 +25,7 @@ def login():
         # Check credentials
         if username == DEFAULT_USERNAME and password == DEFAULT_PASSWORD:
             st.session_state.authenticated = True
-            st.success("Login successful!")
+            st.experimental_rerun()  # Redirect immediately to the dashboard
         else:
             st.error("Invalid username or password.")
 
@@ -38,6 +38,7 @@ def dashboard():
 # Logout functionality
 def logout():
     st.session_state.authenticated = False
+    st.experimental_rerun()  # Redirect back to the login page
 
 # Main application flow
 if st.session_state.authenticated:
