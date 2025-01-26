@@ -25,7 +25,7 @@ def login():
         # Check credentials
         if username == DEFAULT_USERNAME and password == DEFAULT_PASSWORD:
             st.session_state.authenticated = True
-            st.experimental_rerun()  # Immediately refresh the app to show the dashboard
+            #st.experimental_rerun()  # Immediately refresh the app to show the dashboard
         else:
             st.error("Invalid username or password.")
 
