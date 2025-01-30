@@ -36,11 +36,11 @@ def fetch_orders(user_group):
         conn = mysql.connector.connect(**DB_CONFIG)
         cursor = conn.cursor()
 
-        # Fix: Use backticks for `group` column
+        # Fix: Remove the trailing comma in the SELECT statement
         query = """
         SELECT tableNo AS 'Table No.', 
                Product AS 'Product', 
-               quantity AS 'Quantity', 
+               quantity AS 'Quantity'
         FROM HotelOrder 
         WHERE `group` = %s
         """
