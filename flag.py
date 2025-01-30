@@ -64,7 +64,7 @@ def update_order_status(table_no, status):
         conn = mysql.connector.connect(**DB_CONFIG)
         cursor = conn.cursor()
 
-        query = "UPDATE HotelOrder SET status = %s WHERE tableNo = %s"
+        query = "UPDATE FinalOrder SET Status = %s WHERE tableNo = %s"
         cursor.execute(query, (status, table_no))
         conn.commit()
 
