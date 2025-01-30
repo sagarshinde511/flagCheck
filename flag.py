@@ -30,7 +30,6 @@ def authenticate_user(username, password):
     except mysql.connector.Error as err:
         st.error(f"Database error: {err}")
         return None
-
 def fetch_orders(user_group):
     try:
         conn = mysql.connector.connect(**DB_CONFIG)
@@ -49,14 +48,18 @@ def fetch_orders(user_group):
         cursor.close()
         conn.close()
 
-        # Display the orders in a table format using Streamlit
+        # Convert the orders into a Pandas DataFrame
         if orders:
-            st.table(orders)  # Display data as a table
+            df = pd.DataFrame(orders, columns=['Table No.', 'Product', 'Quantity'])
+
+            # Display the DataFrame as a table
+            st.table(df)  # Display data as a table
         else:
             st.write("No orders found for the selected group.")
 
     except mysql.connector.Error as err:
         st.error(f"Database error: {err}")
+
 # Streamlit Page Config
 st.set_page_config(page_title="Login Page", page_icon="🔒", layout="centered")
 
