@@ -14,12 +14,12 @@ def authenticate_user(username, password):
     try:
         conn = mysql.connector.connect(**DB_CONFIG)
         cursor = conn.cursor()
-        
+
         # Query to check if user exists
         query = "SELECT * FROM HotelStaff WHERE loginID = %s AND password = %s"
         cursor.execute(query, (username, password))
         user = cursor.fetchone()
-        
+
         cursor.close()
         conn.close()
 
@@ -40,14 +40,15 @@ def login():
     st.title("🔒 Login Page")
     st.write("Please log in to access the dashboard.")
 
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
+    username = st.text_input("Username", key="login_username")
+    password = st.text_input("Password", type="password", key="login_password")
 
     if st.button("Login"):
         if authenticate_user(username, password):
             st.session_state.authenticated = True
-            st.success("Login successful!")
-            st.experimental_rerun()  # Refresh to show dashboard
+            st.session_state.login_username = ""  # Clear username input
+            st.session_state.login_password = ""  # Clear password input
+            st.rerun()  # Reload app to show dashboard
         else:
             st.error("Invalid username or password.")
 
@@ -58,7 +59,7 @@ def dashboard():
 
     if st.button("Logout"):
         st.session_state.authenticated = False
-        st.experimental_rerun()  # Refresh to go back to login page
+        st.rerun()  # Refresh to go back to login page
 
 # Main Application Logic
 if st.session_state.authenticated:
