@@ -15,8 +15,8 @@ def authenticate_user(username, password):
         conn = mysql.connector.connect(**DB_CONFIG)
         cursor = conn.cursor()
 
-        # Query to get user details including group
-        query = "SELECT group FROM HotelStaff WHERE loginID = %s AND password = %s"
+        # Fix: Use backticks for `group` column
+        query = "SELECT `group` FROM HotelStaff WHERE loginID = %s AND password = %s"
         cursor.execute(query, (username, password))
         user = cursor.fetchone()
 
@@ -37,8 +37,8 @@ def fetch_orders(user_group):
         conn = mysql.connector.connect(**DB_CONFIG)
         cursor = conn.cursor()
 
-        # Query to fetch orders for the user’s group
-        query = "SELECT * FROM HotelOrder WHERE group = %s"
+        # Fix: Use backticks for `group` column
+        query = "SELECT * FROM HotelOrder WHERE `group` = %s"
         cursor.execute(query, (user_group,))
         orders = cursor.fetchall()
 
