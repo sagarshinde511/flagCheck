@@ -31,14 +31,19 @@ def authenticate_user(username, password):
         st.error(f"Database error: {err}")
         return None
 
-# Function to fetch HotelOrder data based on user's group
 def fetch_orders(user_group):
     try:
         conn = mysql.connector.connect(**DB_CONFIG)
         cursor = conn.cursor()
 
         # Fix: Use backticks for `group` column
-        query = "SELECT * FROM HotelOrder WHERE `group` = %s"
+        query = """
+        SELECT tableNo AS 'Table No.', 
+               Product AS 'Product', 
+               quantity AS 'Quantity', 
+        FROM HotelOrder 
+        WHERE `group` = %s
+        """
         cursor.execute(query, (user_group,))
         orders = cursor.fetchall()
 
@@ -49,7 +54,6 @@ def fetch_orders(user_group):
     except mysql.connector.Error as err:
         st.error(f"Database error: {err}")
         return []
-
 # Streamlit Page Config
 st.set_page_config(page_title="Login Page", page_icon="🔒", layout="centered")
 
