@@ -31,20 +31,25 @@ def authenticate_user(username, password):
 # Streamlit Page Config
 st.set_page_config(page_title="Login Page", page_icon="🔒", layout="centered")
 
-# Initialize session state
+# Initialize session state variables
 if "authenticated" not in st.session_state:
     st.session_state.authenticated = False
+if "login_username" not in st.session_state:
+    st.session_state.login_username = ""
+if "login_password" not in st.session_state:
+    st.session_state.login_password = ""
 
 # Login Form
 def login():
     st.title("🔒 Login Page")
     st.write("Please log in to access the dashboard.")
 
-    username = st.text_input("Username", key="login_username")
-    password = st.text_input("Password", type="password", key="login_password")
+    # Use session state variables
+    st.session_state.login_username = st.text_input("Username", value=st.session_state.login_username)
+    st.session_state.login_password = st.text_input("Password", type="password", value=st.session_state.login_password)
 
     if st.button("Login"):
-        if authenticate_user(username, password):
+        if authenticate_user(st.session_state.login_username, st.session_state.login_password):
             st.session_state.authenticated = True
             st.session_state.login_username = ""  # Clear username input
             st.session_state.login_password = ""  # Clear password input
