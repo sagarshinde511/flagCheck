@@ -1,5 +1,6 @@
 import streamlit as st
 import mysql.connector
+import pandas as pd
 
 # Database Configuration
 DB_CONFIG = {
