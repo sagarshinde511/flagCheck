@@ -51,12 +51,12 @@ def fetch_orders(user_group):
 
         # Convert the orders into a Pandas DataFrame
         if orders:
-            df = pd.DataFrame(orders, columns=['Table No.', 'Product', 'Quantity'])
+            df = pd.DataFrame(orders, columns=['Table No.', 'Product', 'Quantity','Status'])
 
             # Display the DataFrame as a table
             st.table(df)  # Display data as a table
-        else:
-            st.write("No orders found for the selected group.")
+        #else:
+        #    st.write("No orders found for the selected group.")
 
     except mysql.connector.Error as err:
         st.error(f"Database error: {err}")
