@@ -55,8 +55,8 @@ def fetch_orders(user_group):
 
             # Display the DataFrame as a table
             st.table(df)  # Display data as a table
-        #else:
-        #    st.write("No orders found for the selected group.")
+        else:
+            st.write("No orders found for the selected group.")
 
     except mysql.connector.Error as err:
         st.error(f"Database error: {err}")
@@ -98,8 +98,8 @@ def dashboard():
         st.write("### Orders for Your Group:")
         for order in orders:
             st.write(order)  # Display each order
-    else:
-        st.write("No orders found for your group.")
+    #else:
+    #    st.write("No orders found for your group.")
 
     if st.button("Logout"):
         st.session_state.authenticated = False
