@@ -40,7 +40,9 @@ def fetch_orders(user_group):
         query = """
         SELECT tableNo AS 'Table No.', 
                Product AS 'Product', 
-               quantity AS 'Quantity'
+               quantity AS 'Quantity',
+               status AS 'Status'
+
         FROM HotelOrder 
         WHERE `group` = %s
         """
@@ -51,7 +53,7 @@ def fetch_orders(user_group):
         conn.close()
 
         if orders:
-            return pd.DataFrame(orders, columns=['Table No.', 'Product', 'Quantity'])
+            return pd.DataFrame(orders, columns=['Table No.', 'Product', 'Quantity', 'Status'])
         else:
             return None
     except mysql.connector.Error as err:
