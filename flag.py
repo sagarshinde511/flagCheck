@@ -51,7 +51,7 @@ def fetch_orders(user_group):
 
         # Convert the orders into a Pandas DataFrame
         if orders:
-            df = pd.DataFrame(orders, columns=['Table No.', 'Product', 'Quantity','Status'])
+            df = pd.DataFrame(orders, columns=['Table No.', 'Product', 'Quantity',])
 
             # Display the DataFrame as a table
             st.table(df)  # Display data as a table
