@@ -63,15 +63,23 @@ def fetch_orders(user_group):
 # Function to update order status
 def update_order_status(table_no, status):
     try:
-        conn = mysql.connector.connect(**DB_CONFIG)
-        cursor = conn.cursor()
 
+        conn1 = mysql.connector.connect(**DB_CONFIG)
+        cursor1 = conn.cursor()
+        query1 = "UPDATE HotelOrder SET status = %s WHERE tableNo = %s"
+        cursor1.execute(query, (status, table_no))
+        conn1.commit()
+        cursor1.close()
+        conn1.close()
+
+        conn = mysql.connector.connect(**DB_CONFIG)
+        cursor = conn.cursor()        
         query = "UPDATE FinalOrder SET Status = %s WHERE orderNo = %s"
         cursor.execute(query, (status, table_no))
         conn.commit()
-
         cursor.close()
         conn.close()
+        
         st.success("Order status updated successfully!")
     except mysql.connector.Error as err:
         st.error(f"Database error: {err}")
