@@ -36,7 +36,6 @@ def fetch_orders(user_group):
         conn = mysql.connector.connect(**DB_CONFIG)
         cursor = conn.cursor()
 
-        # Fix: Remove the trailing comma in the SELECT statement
         query = """
         SELECT tableNo AS 'Table No.', 
                Product AS 'Product', 
@@ -50,10 +49,14 @@ def fetch_orders(user_group):
         cursor.close()
         conn.close()
 
-        return orders
+        # Display the orders in a table format using Streamlit
+        if orders:
+            st.table(orders)  # Display data as a table
+        else:
+            st.write("No orders found for the selected group.")
+
     except mysql.connector.Error as err:
         st.error(f"Database error: {err}")
-        return []
 # Streamlit Page Config
 st.set_page_config(page_title="Login Page", page_icon="🔒", layout="centered")
 
