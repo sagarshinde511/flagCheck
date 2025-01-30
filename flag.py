@@ -89,6 +89,11 @@ def login():
 
 # Dashboard
 def dashboard():
+    if st.button("Logout"):
+        st.session_state.authenticated = False
+        st.session_state.user_group = ""
+        st.rerun()  # Refresh to go back to login page
+
     st.title("📊 Dashboard")
     st.write(f"Welcome! Your group: **{st.session_state.user_group}**")
 
@@ -101,10 +106,6 @@ def dashboard():
     #else:
     #    st.write("No orders found for your group.")
 
-    if st.button("Logout"):
-        st.session_state.authenticated = False
-        st.session_state.user_group = ""
-        st.rerun()  # Refresh to go back to login page
 
 # Main Application Logic
 if st.session_state.authenticated:
