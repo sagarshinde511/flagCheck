@@ -89,11 +89,26 @@ def login():
 
 # Dashboard
 def dashboard():
+    st.markdown("""
+        <style>
+        .logout-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    
+    # Place the Logout button inside a div with the custom CSS class
+    st.markdown('<div class="logout-button">', unsafe_allow_html=True)
+    
     if st.button("Logout"):
         st.session_state.authenticated = False
         st.session_state.user_group = ""
-        st.rerun()  # Refresh to go back to login page
-
+        st.rerun()  # Refresh to go back to the login page
+    
+    st.markdown('</div>', unsafe_allow_html=True)  # Close the div
+    
     st.title("📊 Dashboard")
     st.write(f"Welcome! Your group: **{st.session_state.user_group}**")
 
