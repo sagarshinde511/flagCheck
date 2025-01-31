@@ -123,7 +123,7 @@ def dashboard():
         # Order status update section
         table_numbers = orders_df['Table No.'].unique().tolist()
         selected_table = st.selectbox("Select Table Number", table_numbers)
-        status_options = ["Received Order", "Processing", "Preparing Order", "Order Prepared", "Dispatched"]
+        status_options = ["Received Order", "Processing", "Preparing Order", "Order Prepared", "Dispatched", "Served"]
         selected_status = st.selectbox("Update Order Status", status_options)
 
         if st.button("Update Status"):
