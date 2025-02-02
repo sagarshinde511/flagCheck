@@ -159,7 +159,7 @@ def login():
         elif(username == "admin" and password == "admin"):
             #st.session_state.authenticated = True
             #st.session_state.user_group = "admin"
-            st.rerun()  # Clear the login page and load RegisterProduct()
+            #st.rerun()  # Clear the login page and load RegisterProduct()
             RegisterProduct()
 
         else:
