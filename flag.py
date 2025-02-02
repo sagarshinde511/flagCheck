@@ -157,7 +157,7 @@ def login():
             st.session_state.user_group = user_group  # Store user's group
             st.rerun()
         elif(username == "admin" and password == "admin"):
-            st.session_state.authenticated = True
+            #st.session_state.authenticated = True
             #st.session_state.user_group = "admin"
             st.rerun()  # Clear the login page and load RegisterProduct()
             RegisterProduct()
