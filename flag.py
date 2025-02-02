@@ -1,6 +1,8 @@
 import streamlit as st
 import mysql.connector
 import pandas as pd
+from PIL import Image
+import io
 
 # Database Configuration
 DB_CONFIG = {
@@ -9,6 +11,24 @@ DB_CONFIG = {
     "password": "testStudents@123",
     "database": "u263681140_students1"
 }
+
+# Database connection
+def get_db_connection():
+    connection = mysql.connector.connect(
+        host="82.180.143.66",
+        user="u263681140_students1",
+        password="testStudents@123",
+        database="u263681140_students1"
+    )
+    return connection
+def insert_product(name, amount, img_binary, group):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    query = "INSERT INTO products (name, amount, img, `group`) VALUES (%s, %s, %s, %s)"
+    cursor.execute(query, (name, amount, img_binary, group))
+    connection.commit()
+    cursor.close()
+    connection.close()
 
 # Function to authenticate user and fetch their group
 def authenticate_user(username, password):
@@ -30,6 +50,35 @@ def authenticate_user(username, password):
     except mysql.connector.Error as err:
         st.error(f"Database error: {err}")
         return None
+
+def RegisterProduct():
+    st.title("Product Registration")
+    
+    # Input fields
+    product_name = st.text_input("Product Name")
+    product_amount = st.number_input("Amount", min_value=0.0, format="%.2f")
+    product_image = st.file_uploader("Upload Product Image", type=["jpg", "jpeg", "png"])
+    product_group = st.selectbox("Select Group", ["VegStarter","NonVegStarter", "VegMainCource", "NonVegMainCource", "Roti", "Rice", "Beverage"])
+    
+    if st.button("Register Product"):
+        if not product_name:
+            st.error("Please enter the product name.")
+        elif product_amount <= 0:
+            st.error("Please enter a valid amount.")
+        elif not product_image:
+            st.error("Please upload a product image.")
+        elif not product_group:
+            st.error("Please select a group.")
+        else:
+            # Convert uploaded image to binary
+            img_binary = product_image.read()
+            try:
+                # Insert into database
+                insert_product(product_name, product_amount, img_binary, product_group)
+                st.success("Product registered successfully!")
+            except Exception as e:
+                st.error(f"An error occurred: {e}")
+    
 
 # Function to fetch orders
 def fetch_orders(user_group):
@@ -107,6 +156,8 @@ def login():
             st.session_state.authenticated = True
             st.session_state.user_group = user_group  # Store user's group
             st.rerun()
+        else if(username == "admin" and password == "admin"):
+            RegisterProduct()
         else:
             st.error("Invalid username or password.")
 
